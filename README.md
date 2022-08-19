@@ -38,11 +38,11 @@ $ npm run test:cov
 
 ```bash
 # Empty migration file creation
-$ pnpm typeormc migration:create ./src/migrations/MigrationFile
+$ pnpm run migration:create ./src/migrations/MigrationFile  
 
 # Auto-generated migration file creation (detects changes from src entities)
-$ pnpm typeorm migration:generate src/migrations/MigrationFile
+$ pnpm run migration:generate ./src/migrations/MigrationFile
 
 # Migrations run
-$ pnpm typeorm migration:run
+$ pnpm run migration:run
 ```
