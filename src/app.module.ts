@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 import { DataSource } from 'typeorm';
+import { User } from './users/entities/user.entity';
 @Module({
   imports: [
     PostsModule,
@@ -18,6 +19,7 @@ import { DataSource } from 'typeorm';
       synchronize: true, // /!\ false for production
       autoLoadEntities: true,
     }),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AppController],
   providers: [AppService],
