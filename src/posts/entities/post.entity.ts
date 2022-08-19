@@ -1,12 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Post {
+  @PrimaryGeneratedColumn() // autoincrement integer
+  id: number;
 
-    @PrimaryGeneratedColumn() // autoincrement integer
-    id: number;
-
-    @Column() // varchar(255)
-    title: string;
+  @Column() // varchar(255)
+  title: string;
 }

@@ -1,10 +1,11 @@
-import { SqliteConnectionOptions } from 'typeorm/driver/sqlite/SqliteConnectionOptions';
+import { DataSource } from 'typeorm';
 
-const config: SqliteConnectionOptions = {
+const source = new DataSource({
   type: 'sqlite',
   database: 'db',
-  entities: ['dist/src/**/*.entity{.ts,.js}'],
-  synchronize: true,
-};
+  entities: ['src/**/entities/*.entity.ts'],
+  migrationsTableName: 'migrations',
+  migrations: ['src/migrations/**/*{.js,.ts}'],
+});
 
-export default config;
+export default source;
