@@ -12,8 +12,13 @@ export class AppController {
     private readonly appService: AppService,
   ) {}
 
+  @Get('/')
+  async home() {
+    return 'Backend is running';
+  }
+
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user);
   }

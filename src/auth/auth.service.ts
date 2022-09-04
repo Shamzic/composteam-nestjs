@@ -19,11 +19,17 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+    const payload = { username: user.username, sub: user.userId }
+    // Remove username and password from the user object
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { username, password, ...userData } = await this.usersService.findOne(
+      user.username,
+    );
     return {
       access_token: this.jwtService.sign(payload, {
         secret: process.env.JWT_KEY,
       }),
+      user: userData,
     };
   }
 }
