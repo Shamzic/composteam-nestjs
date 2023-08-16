@@ -15,9 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    // @Todo
-    it('should return the list of the users', () => {
-      expect(appController.getAllusers()).toBe(Array /* An Array of Users */);
+    it('should return "Hello World!"', () => {
+      expect(appController.getHello()).toBe('Hello World!');
     });
   });
 });

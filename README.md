@@ -1,8 +1,7 @@
-## Composteam backend - NestJS
 
-[EN] Collective composting management site..
-[FR] Site de gestion de compostage collectif.
+# Composteam backend
 
+Framework used: Nest.js
 ## Installation
 
 ```bash
@@ -33,16 +32,4 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
-```
-## Migration (Refactoring needed)
-
-```bash
-# Empty migration file creation
-$ pnpm run migration:create ./src/migrations/MigrationFile  
-
-# Auto-generated migration file creation (detects changes from src entities)
-$ pnpm run migration:generate ./src/migrations/MigrationFile
-
-# Migrations run
-$ pnpm run migration:run
 ```
