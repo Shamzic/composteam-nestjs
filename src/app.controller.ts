@@ -5,10 +5,13 @@ import {
   Get,
   Post,
   UnauthorizedException,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { LocalAuthGuard } from './auth/local/local.guard';
 @Controller('api')
 export class AppController {
   constructor(
@@ -16,12 +19,25 @@ export class AppController {
     private jwtService: JwtService,
   ) {}
 
-  @Get()
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Request() req) {
+    return {
+      access_token: await this.jwtService.signAsync({ id: req.user.id }),
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+      },
+    };
+  }
+
+  @Get('protected')
   getHello(): string {
     return this.appService.getHome();
   }
 
-  @Post('register')
+  @Post('oldregister')
   async register(
     @Body('name') name: string,
     @Body('email') email: string,
@@ -37,8 +53,8 @@ export class AppController {
     return user;
   }
 
-  @Post('login')
-  async login(
+  @Post('oldlogin')
+  async oldlogin(
     @Body('email') email: string,
     @Body('password') password: string,
   ) {
@@ -53,10 +69,15 @@ export class AppController {
     }
     return {
       access_token: await this.jwtService.signAsync({ id: user.id }),
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
     };
   }
 
-  @Get('user')
+  @Get('olduser')
   async user(@Body('access_token') access_token: string) {
     try {
       const data = await this.jwtService.verifyAsync(access_token);

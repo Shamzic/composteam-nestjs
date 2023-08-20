@@ -1,27 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
+import { UserEntity } from './users/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class AppService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   getHome(): string {
     return 'Backend composteam';
   }
 
-  async create(data: any): Promise<User> {
+  async create(data: any): Promise<UserEntity> {
     return this.userRepository.save(data);
   }
 
-  async findOneByEmail(email: string): Promise<User | undefined> {
+  async findOneByEmail(email: string): Promise<UserEntity | undefined> {
     return this.userRepository.findOne({ where: { email: email } });
   }
 
-  async findOneById(id: number): Promise<User | undefined> {
+  async findOneById(id: number): Promise<UserEntity | undefined> {
     return this.userRepository.findOne({ where: { id: id } });
   }
 }
