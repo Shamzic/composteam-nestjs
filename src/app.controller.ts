@@ -12,29 +12,26 @@ import { AppService } from './app.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LocalAuthGuard } from './auth/local/local.guard';
+import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt/jwt-auth.guard';
 @Controller('api')
 export class AppController {
   constructor(
     private readonly appService: AppService,
+    private authService: AuthService,
     private jwtService: JwtService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-    return {
-      access_token: await this.jwtService.signAsync({ id: req.user.id }),
-      user: {
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-      },
-    };
+    return this.authService.login(req.user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('protected')
-  getHello(): string {
-    return this.appService.getHome();
+  getHello(@Request() req): string {
+    return req.user;
   }
 
   @Post('oldregister')

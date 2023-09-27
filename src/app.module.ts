@@ -25,8 +25,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     TypeOrmModule.forFeature([UserEntity]),
     JwtModule.register({
-      secret: process.env.JWT_KEY,
-      signOptions: { expiresIn: '1w' },
+      secret: 'secret',
+      signOptions: { expiresIn: '30d' },
     }),
     UsersModule,
     AuthModule,
